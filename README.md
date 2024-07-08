@@ -1,67 +1,27 @@
-# rust template
+# rcli
 
-## use template
+使用 rust 编写的 cli 工具 demo , 完整注释, 可以用来作为 rust 学习过程中的简单源码阅读素材
 
-```shell
-# install cargo-generate
-$ cargo install cargo-generate
-# use template
-$ cargo generate tyr-rust-bootcamp/template
-```
-
-## install pre-commit
-
-- install pre-commit
+## 环境准备
 
 ```shell
-brew install pre-commit
-# or
-pipx install pre-commit
+cargo add anyhow
+cargo add clap --features dervie
+cargo add colored
+cargo add csv
+cargo add serde --features derive
+cargo add serde_json
 ```
 
-- install pre-commit in the project
+## 使用
+
+使用 `--help` 查看帮助信息
+
+实例:
 
 ```shell
-# install pre-commit
-$ pre-commit install
+# 转换为 json 文件并覆盖同名文件
+cargo run -- csv json -i input.csv -o output.csv -r
+# csv 文件内容输出到终端
+cargo run -- csv show -i input.csv
 ```
-
-## cargo denny
-
-we need to install cargo deny
-
-```shell
-# run cargo denny
-cargo install --locked cargo-deny
-```
-
-## typos
-
-```shell
-cargo install --locked cargo-typos
-```
-
-## git cliff
-
-```shell
-cargo install --locked git-cliff
-```
-
-## nextest
-
-```shell
-cargo install --locked nextest
-```
-
-## The role of files
-
-- [./.pre-commit-config.yaml](.pre-commit-config.yaml)
-  - 存放 pre-commit 的配置代码, 说明检查的步骤
-- [./.gitignore](.gitignore)
-  - 存放 git 忽略的文件
-- [./deny.toml](deny.toml)
-  - 存放 deny 的依赖检查配置
-- [./cliff.toml](cliff.toml)
-  - 生成 changelog 的配置
-- [.github/workflows/build.yml](.github/workflows/build.yml)
-  - github 的 CI 配置 , action 需要执行的指令
