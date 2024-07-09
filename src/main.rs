@@ -1,6 +1,6 @@
 use anyhow::Result;
 use clap::Parser;
-use rcli::{process_csv, show, verify_file_exist, Args, Command, Csvcmd};
+use rcli::{generate_password, process_csv, show, verify_file_exist, Args, Command, Csvcmd};
 
 fn main() -> Result<()> {
     // 解析命令行参数
@@ -30,6 +30,15 @@ fn main() -> Result<()> {
                     process_csv(&input, &output, out_type)?;
                 }
             }
+        }
+        Command::Genpassword(gen_opts) => {
+            generate_password(
+                gen_opts.length,
+                gen_opts.no_upper,
+                gen_opts.no_lower,
+                gen_opts.no_number,
+                gen_opts.no_symbol,
+            );
         }
     }
     Ok(())

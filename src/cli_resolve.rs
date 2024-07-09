@@ -19,6 +19,9 @@ pub enum Command {
     // name可以不设置 , 会自动从子指令名称中获取(转换为小写)
     #[command(subcommand)]
     Csv(Csvcmd),
+    // 没有子指令 , 只有选项
+    #[command(name = "genpass", about = "generate password")]
+    Genpassword(GenPassOpts),
 }
 
 #[derive(Debug, Subcommand)]
@@ -62,6 +65,12 @@ pub struct ShowOPts {
     pub dilimiter: char,
 }
 
+#[derive(Debug, Clone, Copy)]
+pub enum FormatType {
+    Json,
+    Yaml,
+    Toml,
+}
 // 为 FormatType 实现 FromStr trait
 impl FromStr for FormatType {
     type Err = anyhow::Error;
@@ -86,11 +95,18 @@ impl std::fmt::Display for FormatType {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
-pub enum FormatType {
-    Json,
-    Yaml,
-    Toml,
+#[derive(Debug, Parser)]
+pub struct GenPassOpts {
+    #[arg(short, long, help = "password length", default_value_t = 8)]
+    pub length: u8,
+    #[arg(long = "nu", help = "upper case or not", default_value_t = false)]
+    pub no_upper: bool,
+    #[arg(long = "nl", help = "lower case or not", default_value_t = false)]
+    pub no_lower: bool,
+    #[arg(long = "ns", help = "symbol char or not", default_value_t = false)]
+    pub no_symbol: bool,
+    #[arg(long = "nn", help = "number char or not", default_value_t = false)]
+    pub no_number: bool,
 }
 
 fn verify_input_file(filename: &str) -> Result<String, String> {
