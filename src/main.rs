@@ -20,7 +20,7 @@ fn main() -> Result<()> {
                     let output = csv_opts.output;
 
                     // 验证在非替换情况下是否存在同名文件
-                    verify_file_exist(&input, replace);
+                    verify_file_exist(&output, replace);
                     // 读取 csv
                     let csv_content = read_cev(&input)?;
                     // 转换为 json并写入
