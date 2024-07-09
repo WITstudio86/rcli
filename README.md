@@ -21,7 +21,14 @@ cargo add serde_json
 
 ```shell
 # 转换为 json 文件并覆盖同名文件
-cargo run -- csv json -i input.csv -o output.csv -r
+csv format -i assets/juventus.csv -o assets/output -t json -r
 # csv 文件内容输出到终端
 cargo run -- csv show -i input.csv
 ```
+
+### 支持的生成类型
+
+- csv
+- json
+- toml
+  - 默认吧第一列的值作为 `[]` 中的字段
