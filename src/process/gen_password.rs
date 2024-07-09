@@ -1,8 +1,8 @@
-use std::process;
-
 use anyhow::Result;
 use colored::Colorize;
 use rand::seq::SliceRandom;
+use std::process;
+use zxcvbn::{zxcvbn, Score};
 
 const UPPERCHARS: &[u8] = b"ABCDEFGHJKLMNPQRSTUVWXYZ";
 const LOWERCHARS: &[u8] = b"abcdefghijkmnopqrstuvwxyz";
@@ -15,7 +15,7 @@ pub fn generate_password(
     no_lower: bool,
     no_symbol: bool,
     no_number: bool,
-) -> String {
+) {
     // 验证密码
     if let Err(e) = verify_password(no_upper, no_lower, no_symbol, no_number) {
         // 在什么都包含的情况下输出错误及提示信息
@@ -56,8 +56,11 @@ pub fn generate_password(
 
     // 乱序处理
     password.shuffle(&mut rng);
+    let password = String::from_utf8(password).unwrap();
+    // 代码强度
+    let strength = zxcvbn(&password, &[]).score();
 
-    String::from_utf8(password).unwrap()
+    print_password_and_strength(password, strength);
 }
 
 fn verify_password(
@@ -74,4 +77,25 @@ fn verify_password(
         ));
     }
     Ok(())
+}
+
+fn print_password_and_strength(password: String, strength: Score) {
+    match strength {
+        Score::Zero => {
+            println!("{}", password.red());
+            eprintln!("Password strength: {}", strength.to_string().red());
+        }
+        Score::One => {
+            println!("{}", password.red());
+            eprintln!("Password strength: {}", strength.to_string().red());
+        }
+        Score::Four => {
+            println!("{}", password.green());
+            eprintln!("Password strength: {}", strength.to_string().green());
+        }
+        _ => {
+            println!("{}", password.yellow());
+            eprintln!("Password strength: {}", strength.to_string().yellow());
+        }
+    }
 }

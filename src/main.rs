@@ -32,15 +32,12 @@ fn main() -> Result<()> {
             }
         }
         Command::Genpassword(gen_opts) => {
-            println!(
-                "{}",
-                generate_password(
-                    gen_opts.length,
-                    gen_opts.no_upper,
-                    gen_opts.no_lower,
-                    gen_opts.no_number,
-                    gen_opts.no_symbol
-                )
+            generate_password(
+                gen_opts.length,
+                gen_opts.no_upper,
+                gen_opts.no_lower,
+                gen_opts.no_number,
+                gen_opts.no_symbol,
             );
         }
     }
