@@ -1,7 +1,7 @@
 mod cli_resolve;
 mod process;
-mod toml_tostring;
 
-pub use cli_resolve::{Args, Command, Csvcmd, FormatType};
-pub use process::{generate_password, process_csv, show, verify_file_exist};
-pub use toml_tostring::to_toml_string;
+pub use cli_resolve::{Args, Command, Csvcmd};
+pub use process::{
+    generate_password, prcocess_base64, process_csv, show, to_toml_string, verify_file_exist,
+};

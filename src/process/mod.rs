@@ -3,3 +3,9 @@ pub use process_csv::{process_csv, show, verify_file_exist};
 
 mod gen_password;
 pub use gen_password::generate_password;
+
+mod toml_tostring;
+pub use toml_tostring::to_toml_string;
+
+mod base64;
+pub use base64::prcocess_base64;
