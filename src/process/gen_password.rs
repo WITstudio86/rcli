@@ -99,3 +99,17 @@ fn print_password_and_strength(password: String, strength: Score) {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_password() {
+        generate_password(16, true, false, true, false);
+    }
+
+    #[test]
+    fn test_password2() {
+        generate_password(16, false, false, false, false);
+    }
+}

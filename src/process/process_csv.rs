@@ -90,3 +90,16 @@ pub fn show(filename: &str) -> Result<()> {
     }
     Ok(())
 }
+
+#[cfg(test)]
+mod test {
+
+    use crate::process::process_csv::verify_file_exist;
+    use std::path::Path;
+
+    #[test]
+    fn test_verify_file_exist() {
+        verify_file_exist("test.csv", false);
+        assert!(!Path::new("test.csv").exists());
+    }
+}

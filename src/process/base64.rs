@@ -37,3 +37,23 @@ fn decode_base64(content: &str, alphabet: AlphabetType) -> Result<String, Error>
         }
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_base64() {
+        let content = "hello world";
+        let encoded = encode_base64(content, AlphabetType::Standard).unwrap();
+        let decoded = decode_base64(&encoded, AlphabetType::Standard).unwrap();
+        assert_eq!(content, decoded);
+    }
+    #[test]
+    fn test_base64_safe() {
+        let content = "hello world";
+        let encoded = encode_base64(content, AlphabetType::Safe).unwrap();
+        let decoded = decode_base64(&encoded, AlphabetType::Safe).unwrap();
+        assert_eq!(content, decoded);
+    }
+}
