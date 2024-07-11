@@ -4,7 +4,7 @@ use csv::Reader;
 use serde::{Deserialize, Serialize};
 use std::{fs, path::Path, process};
 
-use crate::{to_toml_string, FormatType};
+use crate::{cli_resolve::FormatType, to_toml_string};
 // 解析 csv 文件的结构体
 #[derive(Debug, Deserialize, Serialize)]
 // 定义解析的目标名 , 所有设置为首字母大写

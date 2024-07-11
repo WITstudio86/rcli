@@ -1,28 +1,5 @@
-use anyhow::Result;
 use clap::{Parser, Subcommand};
 use std::{path::Path, str::FromStr};
-/*
-rcli csv format -i input.csv -o output -r -t json
-*/
-
-// 定义命令结构体和相关信息 , 相关信息没有指定值的回从Cargo.toml中读取
-#[derive(Parser, Debug)]
-#[command(version , about , author , long_about=None)]
-pub struct Args {
-    // 定义子指令
-    #[command(subcommand)]
-    pub cmd: Command,
-}
-// 子指令
-#[derive(Subcommand, Debug)]
-pub enum Command {
-    // name可以不设置 , 会自动从子指令名称中获取(转换为小写)
-    #[command(subcommand)]
-    Csv(Csvcmd),
-    // 没有子指令 , 只有选项
-    #[command(name = "genpass", about = "generate password")]
-    Genpassword(GenPassOpts),
-}
 
 #[derive(Debug, Subcommand)]
 pub enum Csvcmd {
@@ -93,20 +70,6 @@ impl std::fmt::Display for FormatType {
             FormatType::Toml => write!(f, "toml"),
         }
     }
-}
-
-#[derive(Debug, Parser)]
-pub struct GenPassOpts {
-    #[arg(short, long, help = "password length", default_value_t = 8)]
-    pub length: u8,
-    #[arg(long = "nu", help = "upper case or not", default_value_t = false)]
-    pub no_upper: bool,
-    #[arg(long = "nl", help = "lower case or not", default_value_t = false)]
-    pub no_lower: bool,
-    #[arg(long = "ns", help = "symbol char or not", default_value_t = false)]
-    pub no_symbol: bool,
-    #[arg(long = "nn", help = "number char or not", default_value_t = false)]
-    pub no_number: bool,
 }
 
 fn verify_input_file(filename: &str) -> Result<String, String> {
