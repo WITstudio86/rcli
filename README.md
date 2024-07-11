@@ -47,3 +47,14 @@ cargo run -- genpass -l 12 --nu --nl
 # 生成一个 16 位的不包含数字和符号的密码
 cargo run -- genpass -l 16 --nn --ns
 ```
+
+### base64 编码
+
+实例:
+
+```shell
+# 编码
+cargo run -- base64 -w encode -w safe
+# 解码
+cargo run -- base64 -w decode -w standrad
+```
