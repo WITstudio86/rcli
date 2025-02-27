@@ -1,25 +1,10 @@
-# Rust Generate Template
+# rcli
 
-## preparatory
+a simple cli to learn rust
 
-```shell
-$ cargo install cargo-generate
-```
-
-## use
-
-- first , install cargo make
+## csv
 
 ```shell
-$ cargo install cargo-make
-$ cargo install cargp-release
+$ cargo run -- csv -i [inputfile] -o [outputfile]
 ```
 
-- edit `Makefile.toml` add what crate you need ,default auto push 
-
-- replace your repo url in `Cargo.toml` line 56 
-
-- run : `cargo make commit` auto check code and addd commit
-- run : `cargo make patch` -> `v[major][minor]>patch<` and push
-- run : `cargo make minor` -> `v[major]>minor<[patch]` and push
-- run : `cargo make major` -> `v>major<[minor][patch]` and push

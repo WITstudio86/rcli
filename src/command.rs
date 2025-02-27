@@ -20,7 +20,7 @@ pub struct CsvOpts {
     /// input file path
     #[arg(short, long , value_parser=is_file_exist)]
     pub input: String,
-    /// output file path default output.json
+    /// output file path
     #[arg(short, long, default_value = "output.json")]
     pub output: String,
 }
