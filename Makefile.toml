@@ -88,3 +88,10 @@ install_crate="cargo-release"
 command = "cargo"
 args = ["release" , "major" , "--no-publish", "--execute"]
 # dependencies = ["gitcommit"]
+
+# 直接 push
+[tasks.push]
+install_crate="cargo-release"
+command = "cargo"
+args = ["release", "--no-publish", "--execute"]
+# dependencies = ["gitcommit"]
