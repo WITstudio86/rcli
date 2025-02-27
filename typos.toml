@@ -1,0 +1,6 @@
+[default.extend-words]
+teh = "teh" # 不纠正 teh
+
+[files]
+# 不纠正某些文件
+extend-exclude = ["README.md", "LICENSECHANGELOG.md", "notebooks/*"]

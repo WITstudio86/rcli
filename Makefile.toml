@@ -1,0 +1,90 @@
+# 格式化代码 ， 风格统一 
+[tasks.format]
+command = "cargo"
+args = ["fmt", "--", "--emit=files"]
+
+# 依赖检查 
+[tasks.deny]
+install_crate="cargo-deny"
+command = "cargo"
+args = ["deny" , "check"]
+dependencies = ["format"]
+
+# 拼写检查
+[tasks.typos]
+install_crate="typos-cli"
+command = "typos"
+dependencies = ["deny"]
+
+# 编译检查
+[tasks.check]
+command = "cargo"
+args = ["check" , "--all"]
+dependencies = ["typos"]
+
+# 代码风格检查
+[tasks.clippy]# 一种代码风格检查工具
+command = "cargo"
+args = ["clippy" , "--all-features" , "--tests" , "--benches" , "--", "-D" , "warnings"]
+dependencies = ["check"]
+
+# 运行单元测试
+[tasks.test]
+install_crate="cargo-nextest"
+command = "cargo"
+# 允许不存在单元测试 
+args = ["nextest" , "run" , "--no-tests=pass"]
+dependencies = ["clippy"]
+
+# 更改文件加入到 git
+[tasks.add]
+command="git"
+args=["add" , "."]
+
+# 提交并添加 command 信息
+[tasks.gitcommit]
+command = "git"
+args = ["commit", "-a"]
+dependencies = ["add"]
+
+# 根据提交信息生成changelog
+[tasks.cliff]
+install_crate="git-cliff"
+command = "git"
+args = ["cliff" , "-o" , "CHANGELOG.md"]
+
+# 确保 changelog 被包含在提交中
+[tasks.addchange]
+command="git"
+args=["commit" , "-a" , "-m" , "\"[skip] update changelog\""]
+dependencies = ["cliff"]
+
+# 检查之后执行 commit
+[tasks.commit]
+dependencies = [
+    "add",
+    "gitcommit",
+    "addchange"
+]
+
+# cargo release
+# 小版本发布 
+[tasks.patch]
+install_crate="cargo-release"
+command = "cargo"
+args = ["release" , "patch" , "--no-publish", "--execute"]
+# dependencies = ["gitcommit"]
+
+# 中版本发布 
+[tasks.minor]
+install_crate="cargo-release"
+command = "cargo"
+args = ["release" , "minor" , "--no-publish", "--execute"]
+# dependencies = ["gitcommit"]
+
+# 大版本发布
+[tasks.major]
+install_crate="cargo-release"
+command = "cargo"
+args = ["release" , "major" , "--no-publish", "--execute"]
+# dependencies = ["gitcommit"]
